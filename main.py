@@ -248,7 +248,8 @@ def get_round_info(roundid):
         return redirect("/admin/rounds")
     else:
         cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
-        round = cursor.fetchone()
+        round = list(cursor.fetchone())
+        round[4] = json.loads(round[4])
         return render_template("round_info.html", round=round)
 
 
