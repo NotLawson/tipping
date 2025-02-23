@@ -32,7 +32,7 @@ if cursor.fetchone() is None:
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'rounds';")
 if cursor.fetchone() is None:
     try:
-        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches JSON[])")
+        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches TEXT[])")
     except psycopg2.errors.DuplicateTable:
         pass
 
