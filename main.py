@@ -25,7 +25,7 @@ if cursor.fetchone() is None:
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
 if cursor.fetchone() is None:
-    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin' ['admin'], [])")
+    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ['admin'], [])")
 
 # DB Functions
 def create_user(username, password, name, flags = [], children = []):
