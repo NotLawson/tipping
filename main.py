@@ -242,9 +242,9 @@ def get_round_info(roundid):
         matches = []
 
         for home, away, date, result in zip(request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date"), request.form.getlist("result")):
-            matches.append({"id":f"{home}v{away}", "home":home, "away":away, "date":date})
+            matches.append({"id":f"{home}v{away}", "home":home, "away":away, "date":date, "result":result})
 
-        cursor.execute("UPDATE rounds SET name=%s, start_date=%s, end_date=%s, WHERE id=%s", (round_name, start, end, roundid))
+        cursor.execute("UPDATE rounds SET name=%s, start_date=%s, end_date=%s, matches=%s, WHERE id=%s", (round_name, start, end, matches, roundid))
         return redirect("/admin/rounds")
     else:
         cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
