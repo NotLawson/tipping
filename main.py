@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, make_response
 import psycopg2
 import os
 import json
+import datetime
 
 from psycopg2.extras import Json
 from psycopg2.extensions import register_adapter
@@ -9,6 +10,11 @@ from psycopg2.extensions import register_adapter
 register_adapter(dict, Json)
 
 teams = json.load(open("config/teams.json"))
+def get_team_friendly(team_id):
+    for team in teams["teams"]:
+        if team["id"]==team_id:
+            return team["name"]
+    return "Unknown Team"
 
 # Connect to the School database
 conn = psycopg2.connect(
@@ -32,7 +38,7 @@ if cursor.fetchone() is None:
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'rounds';")
 if cursor.fetchone() is None:
     try:
-        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches TEXT[])")
+        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches TEXT[], current BOOLEAN)")
     except psycopg2.errors.DuplicateTable:
         pass
 
@@ -46,7 +52,7 @@ def db_create_user(username, password, name, flags = [], children = []):
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, %s::text[], %s::text[])", (username, password, name, flags, children))
 
 def db_create_round(id, name, start, end, matches):
-    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
+    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
     cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
 
 def db_submit_tips(round_id, username, tips):
@@ -114,19 +120,64 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-@app.route("/tips", methods=["GET", "POST"])
-def tips():
+@app.route("/tips", methods="GET")
+def roundselector():
     user = auth(request)
     if user==False:
         return render_template('login.html')
     user = get_user(user)
+    
+    cursor.execute("SELECT * FROM rounds")
+    rounds = cursor.fetchall()
 
+    for round in rounds:
+        if round[5]:
+            return redirect("/tips/"+round[0])
+    else:
+        return "No rounds available"
+
+
+@app.route("/tips/<round>", methods=["GET", "POST"])
+def tips(roundid):
+    user = auth(request)
+    if user==False:
+        return render_template('login.html')
+    user = get_user(user)
+    
+    cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
+    round = cursor.fetchone()
+
+    cursor.execute("SELECT tips FROM %s WHERE username=%s" % (roundid, user[0]))
+    tips_raw = cursor.fetchone()
+
+    tips = []
+    if tips_raw != None:
+        for tip in tips_raw[0]:
+            tip = json.loads(tip)
+            tips.append(tip)
+    else:
+        for match in round[4]:
+            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
+    round = {"id":roundid, "tips":tips}
+    
     if request.method == "POST":
-        tip = request.form["tip"]
-        cursor.execute("INSERT INTO tips (username, tips) VALUES (%s, %s)", (user[0], tips))
-    cursor.execute("SELECT * FROM tips")
-    tips = cursor.fetchall()
-    return render_template("tips.html", tips=tips, user=user)
+        match_ids = request.form.getlist("match_id")
+        tip_list = request.form.getlist("tip")
+
+        tips=[]
+        
+        for match in round[4]:
+            tip="None"
+            for id, tip in zip(match_ids, tip_list):
+                if match["id"]==id:
+                    tip=tip
+                    break
+            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
+        
+        cursor.execute("UPDATE %s SET tips=%s WHERE username=%s", (roundid, tips, user[0]))
+        return redirect("/tips/"+roundid)
+
+    return render_template("tips.html", user=user, round=round)
 
 @app.route("/admin")
 def admin():

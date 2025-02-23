@@ -9,6 +9,7 @@
   <table>
     <tr>
       <th>Round ID</th>
+      <th>Round Name</th>
       <th>Start Date</th>
       <th>End Date</th>
       <th>More Info</th>
@@ -18,6 +19,7 @@
       <td>{{ round[0] }}</td>
       <td>{{ round[1] }}</td>
       <td>{{ round[2] }}</td>
+      <td>{{ round[3]}}
       <td><a href="/admin/rounds/{{ round[0] }}">→</a></td>
     </tr>
     {% endfor %}

@@ -1,0 +1,27 @@
+.round {
+    
+}
+
+.match {
+    background-color: #f0f0f0;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+}
+
+.one {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.two {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+.three {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
