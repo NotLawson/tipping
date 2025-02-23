@@ -34,14 +34,14 @@ if cursor.fetchone() is None:
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ARRAY ['admin'], ARRAY []::text[])")
 
 # DB Functions
-def create_user(username, password, name, flags = [], children = []):
+def db_create_user(username, password, name, flags = [], children = []):
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, ARRAY %s::text[], ARRAY %s::text[])", (username, password, name, flags, children))
 
-def create_round(id, name, start, end, matches):
+def db_create_round(id, name, start, end, matches):
     cursor.execute("INSERT INTO rounds (id, name, start, end, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
     cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
 
-def submit_tips(round_id, username, tips):
+def db_submit_tips(round_id, username, tips):
     cursor.execute("INSERT INTO %s (username, tips) VALUES (%s, %s)" % (round_id, username, tips))
 
 def postgres_list(list):
@@ -146,7 +146,7 @@ def create_user():
         name = request.form["name"]
         flags = request.form.getlist("flag")
         children = request.form.getlist("child")
-        create_user(username, password, name, flags, children)
+        db_create_user(username, password, name, flags, children)
         return redirect("/admin/users")
 
     return render_template("create_user.html", user=user)
@@ -183,7 +183,7 @@ def create_round():
         for name, home, away, date in zip(request.form.getlist("match_name"), request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
             matches.append({"id":f"{home}v{away}","name":name, "home":home, "away":away, "date":date})
 
-        create_round(round_id, round_name, start, end, matches)
+        db_create_round(round_id, round_name, start, end, matches)
         return redirect("/admin/rounds")
         
 
