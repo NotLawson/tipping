@@ -31,11 +31,11 @@ if cursor.fetchone() is None:
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
 if cursor.fetchone() is None:
-    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ['admin'], [])")
+    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ARRAY ['admin'], ARRAY []")
 
 # DB Functions
 def create_user(username, password, name, flags = [], children = []):
-    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, %s, %s)", (username, password, name, flags, children))
+    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, ARRAY %s, ARRAY %s)", (username, password, name, flags, children))
 
 def create_round(id, name, start, end, matches):
     cursor.execute("INSERT INTO rounds (id, name, start, end, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
@@ -44,6 +44,12 @@ def create_round(id, name, start, end, matches):
 def submit_tips(round_id, username, tips):
     cursor.execute("INSERT INTO %s (username, tips) VALUES (%s, %s)" % (round_id, username, tips))
 
+def postgres_list(list):
+    postgres_list = "{"
+    for item in list:
+        postgres_list += item + ","
+    postgres_list += "}"
+    return postgres_list
 
 TOKENS = {}
 
