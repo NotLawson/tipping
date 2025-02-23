@@ -37,7 +37,7 @@
                 {% endif %}
             {% endfor %}
         </select></td>
-        <td><input type="date" name="date" value="{{ match['date'] }}"></td>
+        <td><input type="date" name="match_date" value="{{ match['date'] }}"></td>
         <td><select name="result" value="{{ match['result'] }}">
             {% if match["result"]==match["home"] %}
             <option value="tbd">Not Played</option>
