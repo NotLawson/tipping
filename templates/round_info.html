@@ -39,11 +39,11 @@
         </select></td>
         <td><input type="date" name="date" value="{{ match['date'] }}"></td>
         <td><select name="result" value="{{ match['result'] }}">
-            {% if match["result"]==match["home"]"%}
+            {% if match["result"]==match["home"] %}
             <option value="tbd">Not Played</option>
             <option value="{{ match['home']}}" selected>{{ match['home']}}</option>
             <option value="{{ match['away']}}">{{ match['away']}}</option>
-            {% elif match["result"]==match["away"]"%}
+            {% elif match["result"]==match["away"] %}
             <option value="tbd">Not Played</option>
             <option value="{{ match['home']}}">{{ match['home']}}</option>
             <option value="{{ match['away']}}" selected>{{ match['away']}}</option>
