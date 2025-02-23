@@ -176,7 +176,6 @@ def users():
 def get_user_info(username):
     if request.method=="DELETE":
         cursor.execute("DELETE FROM users WHERE username=%s", (username,))
-        return redirect("/admin/users")
     elif request.method=="POST":
         username=request.form["username"]
         password = request.form["password"]
@@ -233,7 +232,6 @@ def get_round_info(roundid):
     if request.method=="DELETE":
         cursor.execute("DELETE FROM rounds WHERE id=%s", (roundid,))
         cursor.execute("DROP TABLE %s" % roundid)
-        return redirect("/admin/rounds")
 
     elif request.method=="POST":
         round_name = request.form["name"]
