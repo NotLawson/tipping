@@ -229,7 +229,7 @@ def rounds():
     return render_template("rounds.html", rounds=rounds, user=user)
 
 @app.route("/admin/rounds/<roundid>", methods = ["GET", "POST", "DELETE"])
-def get_user_info(roundid):
+def get_round_info(roundid):
     if request.method=="DELETE":
         cursor.execute("DELETE FROM rounds WHERE id=%s", (roundid,))
         cursor.execute("DROP TABLE %s" % roundid)
