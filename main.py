@@ -28,19 +28,14 @@ cursor = conn.cursor()
 
 
 # Check for tables
-cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'users';")
-if cursor.fetchone() is None:
-    try:
-        cursor.execute("CREATE TABLE users (username TEXT, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
-    except psycopg2.errors.DuplicateTable:
-        pass
-
-cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'rounds';")
-if cursor.fetchone() is None:
-    try:
-        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches TEXT[], current BOOLEAN)")
-    except psycopg2.errors.DuplicateTable:
-        pass
+try:
+    cursor.execute("CREATE TABLE users (username TEXT, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
+except psycopg2.errors.DuplicateTable:
+    pass
+try:
+    cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches TEXT[], current BOOLEAN)")
+except psycopg2.errors.DuplicateTable:
+    pass
 
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
@@ -52,7 +47,7 @@ def db_create_user(username, password, name, flags = [], children = []):
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, %s::text[], %s::text[])", (username, password, name, flags, children))
 
 def db_create_round(id, name, start, end, matches):
-    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
+    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s, %s)", (id, name, start, end, matches))
     cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
 
 def db_submit_tips(round_id, username, tips):
