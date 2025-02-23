@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, make_response
 import psycopg2
 import os
 
@@ -87,7 +87,9 @@ def login():
         if user is not None:
             token = os.urandom(16).hex()
             TOKENS[token] = username
-            return redirect('/').set_cookie('token', token)
+            resp = make_response(redirect('/'))
+            resp.set_cookie('token', token)
+            return resp
     return render_template('login.html')
 
 @app.route('/logout')
