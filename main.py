@@ -16,11 +16,17 @@ cursor = conn.cursor()
 # Check for tables
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'users';")
 if cursor.fetchone() is None:
-    cursor.execute("CREATE TABLE users (username TEXT, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
+    try:
+        cursor.execute("CREATE TABLE users (username TEXT, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
+    except psycopg2.errors.DuplicateTable:
+        pass
 
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'rounds';")
 if cursor.fetchone() is None:
-    cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches JSON[])")
+    try:
+        cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches JSON[])")
+    except psycopg2.errors.DuplicateTable:
+        pass
 
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
