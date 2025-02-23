@@ -46,7 +46,7 @@ def db_create_user(username, password, name, flags = [], children = []):
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, %s::text[], %s::text[])", (username, password, name, flags, children))
 
 def db_create_round(id, name, start, end, matches):
-    cursor.execute("INSERT INTO rounds (id, name, start, end, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
+    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
     cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
 
 def db_submit_tips(round_id, username, tips):
