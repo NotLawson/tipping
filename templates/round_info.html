@@ -61,7 +61,5 @@
 </form>
 <br>
 <p style="color: red;">Danger zone!</p>
-<form method="DELETE">
-<input type="submit" value="Delete">
-</form>
+<input type="button" value="Delete" onclick="fetch(window.location.pathname,{method: 'delete'})">
 {% endblock %}
