@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+{% block imports %}
+<link rel="stylesheet" type="text/css" href="/static/admin.css">
+{% endblock %}
+
+{% block content %}
+  <h1>Rounds</h1>
+  <table>
+    <tr>
+      <th>Round ID</th>
+      <th>Round Name</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>More Info</th>
+    </tr>
+    {% for round in rounds %}
+    <tr>
+      <td>{{ round[0] }}</td>
+      <td>{{ round[1] }}</td>
+      <td>{{ round[2] }}</td>
+      <td>{{ round[3] }}</td>
+      <td><a href="/admin/rounds/{{ round[0] }}">→</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  <a href="/admin/create_round">Create Round</a>
+{% endblock %}

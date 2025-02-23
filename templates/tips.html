@@ -1,0 +1,12 @@
+{% extends "main.html" %}
+
+{% block imports %}
+<link rel="stylesheet" type="text/css" href="/static/admin.css">
+{% endblock %}
+
+{% block content %}
+  <h1>Admin</h1>
+  <p>Welcome to the admin page!</p>
+  <a href="/admin/users">View Users</a>
+  <a href="/admin/rounds">View Rounds</a>
+{% endblock %}

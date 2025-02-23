@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/navbar.css">
+    <script src="/static/main.js" defer></script>
+    {% block imports %}
+    {% endblock %}
+    <div class="sitenav">
+        <span>
+        <input class="sitenav_button" type="button" value="Home" onclick="window.location.href='/'">
+        <input class="sitenav_button" type="button" value="Leaderboard" onclick="window.location.href='/leaderboard'">
+        <input class="sitenav_button" type="button" value="Tips" onclick="window.location.href='/tips'">  
+        <input class="sitenav_button" type="button" value="Account" onclick="window.location.href='/account'">
+        </span>
+    </div>
+</head>
+<body>
+    <br>
+    <article>
+        {% block content %}
+
+        {% endblock %}
+    </article>
+</body>
+</html>

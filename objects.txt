@@ -1,0 +1,45 @@
+# User object (users table)
+(username("notlawson"), password("password"), name("NotLawson") flags(["admin", "child"]), children(["username", "username"] or None))
+
+# Round object (rounds table)
+(id("round1"), roundname("Round 1"), start(dateString), end(dateString) matches([see below]))
+[
+    {
+        "id":"team1vteam2",
+        "name":"Team 1 vs Team 2",
+        "teams":("team1", "team2")
+        "date":dateString,
+        "winner":"team1"
+    },
+    {
+        "id":"team3vteam4",
+        "name":"Team 3 vs Team 4",
+        "teams":("team3", "team4")
+        "date":dateString,
+        "winner":"team4"
+    },
+    {
+        "id":"team5vteam6",
+        "name":"Team 5 vs Team 6",
+        "teams":("team5", "team6")
+        "date":dateString,
+        "winner":"tbd"
+    },
+]
+
+# Tips object (<round> table)
+(username("username"), tips([see below]))
+[
+    {
+        "id":"team1vteam2",
+        "tip":"team1"
+    },
+    {
+        "id":"team3vteam4",
+        "tip":"team4"
+    },
+    {
+        "id":"team5vteam6",
+        "tip":"team5"
+    },
+]

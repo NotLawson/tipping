@@ -1,0 +1,28 @@
+{ extends "main.html" }
+
+{ block imports }
+<link rel="stylesheet" type="text/css" href="/static/admin.css">
+{ endblock }
+
+{ block content }
+  <h1>Users</h1>
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Name</th>
+      <th>Flags</th>
+      <th>Children</th>
+    </tr>
+    { for user in users }
+    <tr>
+      <td>{{ user[0] }}</td>
+      <td>{{ user[1] }}</td>
+      <td>{{ user[2] }}</td>
+      <td>{{ user[3] }}</td>
+      <td>{{ user[4] }}</td>
+      <td><a href="/admin/users/{{ user[0] }}">→</a></td>
+    </tr>
+    { endfor }
+  </table>
+{ endblock }

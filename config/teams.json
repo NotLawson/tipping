@@ -1,0 +1,34 @@
+{
+    "teams":[
+        {
+            "id":"team1",
+            "name":"Team 1",
+            "profileImage":"team1.jpg"
+        },
+        {
+            "id":"team2",
+            "name":"Team 2",
+            "profileImage":"team2.jpg"
+        },
+        {
+            "id":"team3",
+            "name":"Team 3",
+            "profileImage":"team3.jpg"
+        },
+        {
+            "id":"team4",
+            "name":"Team 4",
+            "profileImage":"team4.jpg"
+        },
+        {
+            "id":"team5",
+            "name":"Team 5",
+            "profileImage":"team5.jpg"
+        },
+        {
+            "id":"team6",
+            "name":"Team 6",
+            "profileImage":"team6.jpg"
+        }
+    ]
+}
