@@ -1,6 +1,9 @@
 from flask import Flask, request, render_template, redirect, make_response
 import psycopg2
 import os
+import json
+
+teams = json.load(open("config/teams.json"))
 
 # Connect to the School database
 conn = psycopg2.connect(
@@ -187,7 +190,7 @@ def create_round():
         return redirect("/admin/rounds")
         
 
-    return render_template("create_round.html", user=user)
+    return render_template("create_round.html", user=user, teams = teams["teams"])
 
 @app.route("/admin/rounds")
 def rounds():
