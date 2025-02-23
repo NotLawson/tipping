@@ -7,4 +7,8 @@
 {% block content %}
   <h1>Hello, {{user[0]}}</h1>
   <p>Welcome to the home page!</p>
+  {% if "admin" in user[3] %}
+  <a href="/admin">Admin</a>
+  {% endif %}
+  <br><a href="/logout">Logout</a>
 {% endblock %}
