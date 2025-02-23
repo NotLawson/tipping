@@ -252,8 +252,6 @@ def get_round_info(roundid):
         for match in round[4]:
             index = round[4].index(match)
             round[4][index] = json.loads(match)
-
-        print(round[4])
         return render_template("round_info.html", round=round)
 
 
