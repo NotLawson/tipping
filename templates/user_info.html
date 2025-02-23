@@ -1,12 +1,12 @@
 {% extends "main.html %}
 
 {% block content %}
-<h1>User Info - {{user[2]}}</h1>
-<form method="post">
-<p>Username: <input type="text" value="{{user[0]}}"></p>
-<p>Password: <input type="text" value="{{user[1]}}"></p>
-<p>Name: <input type="text" value="{{user[2]}}"></p>
-<input type="submit" value="Update">
+<h1>User Info</h1>
+<form method="POST">
+  <p>Username: <input type="text" value="{{user[0]}}"></p>
+  <p>Password: <input type="text" value="{{user[1]}}"></p>
+  <p>Name: <input type="text" value="{{user[2]}}"></p>
+  <input type="submit" value="Update">
 </form>
 <br>
 <p style="color: red;">Danger zone!</p>
