@@ -3,6 +3,11 @@ import psycopg2
 import os
 import json
 
+from psycopg2.extras import Json
+from psycopg2.extensions import register_adapter
+
+register_adapter(dict, Json)
+
 teams = json.load(open("config/teams.json"))
 
 # Connect to the School database
