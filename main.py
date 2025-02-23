@@ -249,10 +249,10 @@ def get_round_info(roundid):
     else:
         cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
         round = list(cursor.fetchone())
+        matches = []
         for match in round[4]:
-            index = round[4].index(match)
-            round[4][index] = json.loads(match)
-        return render_template("round_info.html", round=round)
+            matches.append(json.loads(match))
+        return render_template("round_info.html", round=round, matches=matches)
 
 
 

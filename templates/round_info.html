@@ -14,9 +14,9 @@
         <th>Home Team</th>
         <th>Away Team</th>
         <th>Match Date</th>
-        <th>result</th>
+        <th>Result</th>
     </tr>
-    {% for match in round[4] %}
+    {% for match in matches %}
     <tr>
         <td>{{ match["id"] }}</td>
         <td><select name="home" value="{{ match['home'] }}">
@@ -38,7 +38,7 @@
         </td>
     </tr>
     {% endfor %}
-</table>
+</table><br>
 <input type="submit" value="Update">
 </form>
 <br>
