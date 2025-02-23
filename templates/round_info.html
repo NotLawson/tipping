@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h1>Round Info</h1>
+<form method="post">
+<p>Round ID: {{ round[0] }}</p>
+<p>Round Name: <input type="text" value="{{ round[1] }}"></p>
+<p>Start Date: <input type="date" value="{{ round[2] }}"></p>
+<p>End Date: <input type="date" value="{{ round[3] }}"></p>
+<p>Matches:</p>
+<table>
+    <tr>
+        <th>Match ID</th>
+        <th>Match Name</th>
+        <th>Home Team</th>
+        <th>Away Team</th>
+        <th>Match Date</th>
+    </tr>
+    {% for match in round[4] %}
+    <tr>
+        <td>{{ match[0] }}</td>
+        <td>{{ match[1] }}</td>
+        <td>{{ match[2] }}</td>
+        <td>{{ match[3] }}</td>
+        <td>{{ match[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<input type="submit" value="Update">
+</form>
+<br>
+<p style="color: red;">Danger zone!</p>
+<form method="delete">
+<input type="submit" value="Delete">
+</form>
+{% endblock %}

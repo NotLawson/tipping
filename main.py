@@ -172,6 +172,24 @@ def users():
     users = cursor.fetchall()
     return render_template("users.html", users=users, user=user)
 
+@app.route("/admin/users/<username>", methods = ["GET", "POST", "DELETE"])
+def get_user_info(username):
+    if request.method=="DELETE":
+        cursor.execute("DELETE FROM users WHERE username=%s", (username,))
+        return redirect("/admin/users")
+    elif request.method=="POST":
+        username=request.form["username"]
+        password = request.form["password"]
+        name = request.form["name"]
+        flags = request.form.getlist("flag")
+        children = request.form.getlist("child")
+        cursor.execute("UPDATE users SET username=%s password=%s, name=%s, flags=%s::text[], children=%s::text[] WHERE username=%s", (username, password, name, flags, children))
+        return redirect("/admin/users")
+    else:
+        cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+        user = cursor.fetchone()
+        return render_template("user_info.html", user=user)
+
 @app.route("/admin/create_round", methods=["GET", "POST"])
 def create_round():
     user = auth(request)
@@ -209,6 +227,30 @@ def rounds():
     cursor.execute("SELECT * FROM rounds")
     rounds = cursor.fetchall()
     return render_template("rounds.html", rounds=rounds, user=user)
+
+@app.route("/admin/rounds/<roundid>", methods = ["GET", "POST", "DELETE"])
+def get_user_info(roundid):
+    if request.method=="DELETE":
+        cursor.execute("DELETE FROM rounds WHERE id=%s", (roundid,))
+        cursor.execute("DROP TABLE %s" % roundid)
+        return redirect("/admin/rounds")
+
+    elif request.method=="POST":
+        round_name = request.form["round_name"]
+        start = request.form["start_date"]
+        end = request.form["end_date"]
+        #matches = []
+
+        #for name, home, away, date in zip(request.form.getlist("match_name"), request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
+        #    matches.append({"id":f"{home}v{away}","name":name, "home":home, "away":away, "date":date})
+
+        cursor.execute("UPDATE rounds SET name=%s, start_date=%s, end_date=%s, WHERE id=%s", (round_name, start, end, roundid))
+        return redirect("/admin/rounds")
+    else:
+        cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
+        round = cursor.fetchone()
+        return render_template("round_info.html", round=round)
+
 
 
 if __name__ == '__main__':
