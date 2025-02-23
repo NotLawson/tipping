@@ -31,11 +31,11 @@ if cursor.fetchone() is None:
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
 if cursor.fetchone() is None:
-    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ARRAY ['admin'], ARRAY [])")
+    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES ('admin', 'admin', 'Admin', ARRAY ['admin'], ARRAY []::text[])")
 
 # DB Functions
 def create_user(username, password, name, flags = [], children = []):
-    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, ARRAY %s, ARRAY %s)", (username, password, name, flags, children))
+    cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, ARRAY %s::text[], ARRAY %s::text[])", (username, password, name, flags, children))
 
 def create_round(id, name, start, end, matches):
     cursor.execute("INSERT INTO rounds (id, name, start, end, matches) VALUES (%s, %s, %s, %s, %s)", (id, name, start, end, matches))
