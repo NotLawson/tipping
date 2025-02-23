@@ -120,7 +120,7 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
-@app.route("/tips", methods="GET")
+@app.route("/tips")
 def roundselector():
     user = auth(request)
     if user==False:
