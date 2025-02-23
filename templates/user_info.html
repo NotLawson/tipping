@@ -10,5 +10,8 @@
 </form>
 <br>
 <p style="color: red;">Danger zone!</p>
-<input type="button" value="Delete" onclick="fetch(window.location.pathname,{method: 'delete'})">
+<input type="button" value="Delete" onclick="fetch(window.location.pathname,{method: 'delete'});window.location.pathname='/admin/users'">
+{% endblock %}
+
+{% block imports %}
 {% endblock %}
