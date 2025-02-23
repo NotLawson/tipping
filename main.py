@@ -87,7 +87,7 @@ def login():
         if user is not None:
             token = os.urandom(16).hex()
             TOKENS[token] = username
-            return redirect('/', set_cookie=('token', token))
+            return redirect('/').set_cookie('token', token)
     return render_template('login.html')
 
 @app.route('/logout')
