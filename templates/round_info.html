@@ -18,15 +18,14 @@
     </tr>
     {% for match in round[4] %}
     <tr>
-        <td>{{ match[0] }}</td>
-        <td>{{ match[1] }}</td>
-        <td>{{ match[2] }}</td>
-        <td>{{ match[3] }}</td>
-        <td>{{ match[4] }}</td>
+        <td>{{ match["id"] }}</td>
+        <td>{{ match["name"] }}</td>
+        <td>{{ match["home"] }}</td>
+        <td>{{ match["away"] }}</td>
+        <td>{{ match["date"] }}</td>
     </tr>
     {% endfor %}
 </table>
-{{ round[4] }}
 <input type="submit" value="Update">
 </form>
 <br>
