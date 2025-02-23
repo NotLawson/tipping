@@ -16,11 +16,11 @@ cursor = conn.cursor()
 # Check for tables
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'users';")
 if cursor.fetchone() is None:
-    cursor.execute("CREATE TABLE users (username TEXT PRIMARY, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
+    cursor.execute("CREATE TABLE users (username TEXT, password TEXT, name TEXT, flags TEXT[], children TEXT[])")
 
 cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'rounds';")
 if cursor.fetchone() is None:
-    cursor.execute("CREATE TABLE rounds (id TEXT PRIMARY, name TEXT, start_date TEXT, end_date TEXT, matches JSON[])")
+    cursor.execute("CREATE TABLE rounds (id TEXT, name TEXT, start_date TEXT, end_date TEXT, matches JSON[])")
 
 # Create admin user
 cursor.execute("SELECT * FROM users WHERE username='admin'")
