@@ -19,21 +19,39 @@
     {% for match in matches %}
     <tr>
         <td>{{ match["id"] }}</td>
-        <td><select name="home" value="{{ match['home'] }}">
+        <td><select name="home">
             {% for team in teams %}
-                <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                {% if team["id"] == match["home"]%}
+                    <option value="{{ team['id'] }}" selected>{{ team['name'] }}</option>
+                {% else %}
+                    <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                {% endif %}
             {% endfor %}
         </select></td>
-        <td><select name="away" value="{{ match['away'] }}">
+        <td><select name="away">
             {% for team in teams %}
-                <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                {% if team["id"] == match["away"]%}
+                    <option value="{{ team['id'] }}" selected>{{ team['name'] }}</option>
+                {% else %}
+                    <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+                {% endif %}
             {% endfor %}
         </select></td>
         <td><input type="date" name="date" value="{{ match['date'] }}"></td>
         <td><select name="result" value="{{ match['result'] }}">
+            {% if match["result"]==match["home"]"%}
+            <option value="tbd">Not Played</option>
+            <option value="{{ match['home']}}" selected>{{ match['home']}}</option>
+            <option value="{{ match['away']}}">{{ match['away']}}</option>
+            {% elif match["result"]==match["away"]"%}
             <option value="tbd">Not Played</option>
             <option value="{{ match['home']}}">{{ match['home']}}</option>
+            <option value="{{ match['away']}}" selected>{{ match['away']}}</option>
+            {% else %}
+            <option value="tbd" selected>Not Played</option>
+            <option value="{{ match['home']}}">{{ match['home']}}</option>
             <option value="{{ match['away']}}">{{ match['away']}}</option>
+            {% endif %}
         </select></td>
         </td>
     </tr>
