@@ -207,7 +207,7 @@ def create_round():
         matches = []
 
         for name, home, away, date in zip(request.form.getlist("match_name"), request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
-            matches.append({"id":f"{home}v{away}","name":name, "home":home, "away":away, "date":date})
+            matches.append({"id":f"{home}v{away}", "home":home, "away":away, "date":date, "result":"tbd"})
 
         db_create_round(round_id, round_name, start, end, matches)
         return redirect("/admin/rounds")
@@ -236,22 +236,22 @@ def get_round_info(roundid):
         return redirect("/admin/rounds")
 
     elif request.method=="POST":
-        round_name = request.form["round_name"]
-        start = request.form["start_date"]
-        end = request.form["end_date"]
-        #matches = []
+        round_name = request.form["name"]
+        start = request.form["start"]
+        end = request.form["end"]
+        matches = []
 
-        #for name, home, away, date in zip(request.form.getlist("match_name"), request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
-        #    matches.append({"id":f"{home}v{away}","name":name, "home":home, "away":away, "date":date})
+        for home, away, date, result in zip(request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date"), request.form.getlist("result")):
+            matches.append({"id":f"{home}v{away}", "home":home, "away":away, "date":date})
 
         cursor.execute("UPDATE rounds SET name=%s, start_date=%s, end_date=%s, WHERE id=%s", (round_name, start, end, roundid))
         return redirect("/admin/rounds")
     else:
         cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
         round = list(cursor.fetchone())
-        for match in round[4]:
-            index = round[4].index(match)
-            round[4][index] = json.loads(match)
+        for match in round[3]:
+            index = round[3].index(match)
+            round[3][index] = json.loads(match)
         return render_template("round_info.html", round=round)
 
 

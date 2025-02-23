@@ -4,9 +4,9 @@
 <h1>Round Info</h1>
 <form method="post">
 <p>Round ID: {{ round[0] }}</p>
-<p>Round Name: <input type="text" value="{{ round[1] }}"></p>
-<p>Start Date: <input type="date" value="{{ round[2] }}"></p>
-<p>End Date: <input type="date" value="{{ round[3] }}"></p>
+<p>Round Name: <input name="name" type="text" value="{{ round[1] }}"></p>
+<p>Start Date: <input name="start" type="date" value="{{ round[2] }}"></p>
+<p>End Date: <input name="end" type="date" value="{{ round[3] }}"></p>
 <p>Matches:</p>
 <table>
     <tr>
@@ -19,10 +19,23 @@
     {% for match in round[4] %}
     <tr>
         <td>{{ match["id"] }}</td>
-        <td>{{ match["name"] }}</td>
-        <td>{{ match["home"] }}</td>
-        <td>{{ match["away"] }}</td>
-        <td>{{ match["date"] }}</td>
+        <td><select name="home" value="{{ match['home'] }}">
+            {% for team in teams %}
+                <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+            {% endfor %}
+        </select></td>
+        <td><select name="away" value="{{ match['away'] }}">
+            {% for team in teams %}
+                <option value="{{ team['id'] }}">{{ team['name'] }}</option>
+            {% endfor %}
+        </select></td>
+        <td><input type="date" name="date" value="{{ match['date'] }}"></td>
+        <td><select name="result" value="{{ match['result'] }}">
+            <option value="tbd">Not Played</option>
+            <option value="{{ match['home']}}">{{ match['home']}}</option>
+            <option value="{{ match['away']}}">{{ match['away']}}</option>
+        </select></td>
+        </td>
     </tr>
     {% endfor %}
 </table>
