@@ -183,7 +183,7 @@ def get_user_info(username):
         name = request.form["name"]
         flags = request.form.getlist("flag")
         children = request.form.getlist("child")
-        cursor.execute("UPDATE users SET username=%s password=%s, name=%s, flags=%s::text[], children=%s::text[] WHERE username=%s", (username, password, name, flags, children))
+        cursor.execute("UPDATE users SET username=%s password=%s, name=%s, flags=%s::text[], children=%s::text[] WHERE username=%s", (username, password, name, flags, children, username))
         return redirect("/admin/users")
     else:
         cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
