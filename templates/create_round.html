@@ -18,12 +18,9 @@
     <br>
     <label for="end_date">End Date:</label>
     <input type="date" id="end_date" name="end_date">
-    <br><br>
+    <br><h2>Matches:</h2>
     <div id="matches">
         <div class="match" id="match">
-            <label for="match_name">Match Name:</label>
-            <input type="text" id="match_name" name="match_name">
-            <br>
             <label>Teams:</label>
             <select name="home" id="home">
                 {% for team in teams %}
