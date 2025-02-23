@@ -252,7 +252,7 @@ def get_round_info(roundid):
         matches = []
         for match in round[4]:
             matches.append(json.loads(match))
-        return render_template("round_info.html", round=round, matches=matches, teams=teams)
+        return render_template("round_info.html", round=round, matches=matches, teams=teams["teams"])
 
 
 
