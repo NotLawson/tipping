@@ -206,7 +206,7 @@ def create_round():
         end = request.form["end_date"]
         matches = []
 
-        for name, home, away, date in zip(request.form.getlist("match_name"), request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
+        for home, away, date in zip(request.form.getlist("home"), request.form.getlist("away"), request.form.getlist("match_date")):
             matches.append({"id":f"{home}v{away}", "home":home, "away":away, "date":date, "result":"tbd"})
 
         db_create_round(round_id, round_name, start, end, matches)
@@ -249,9 +249,9 @@ def get_round_info(roundid):
     else:
         cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
         round = list(cursor.fetchone())
-        for match in round[3]:
-            index = round[3].index(match)
-            round[3][index] = json.loads(match)
+        for match in round[4]:
+            index = round[4].index(match)
+            round[4][index] = json.loads(match)
         return render_template("round_info.html", round=round)
 
 
