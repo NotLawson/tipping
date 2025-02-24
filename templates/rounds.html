@@ -12,6 +12,7 @@
       <th>Round Name</th>
       <th>Start Date</th>
       <th>End Date</th>
+      <th>Current</th>
       <th>More Info</th>
     </tr>
     {% for round in rounds %}
@@ -19,7 +20,8 @@
       <td>{{ round[0] }}</td>
       <td>{{ round[1] }}</td>
       <td>{{ round[2] }}</td>
-      <td>{{ round[3]}}
+      <td>{{ round[3] }}</td>
+      <td><a href="/admin/set_current_round/{{ round[0] }}">{{ round[5] }}</a></td>
       <td><a href="/admin/rounds/{{ round[0] }}">→</a></td>
     </tr>
     {% endfor %}

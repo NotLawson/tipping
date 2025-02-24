@@ -47,11 +47,13 @@ def db_create_user(username, password, name, flags = [], children = []):
     cursor.execute("INSERT INTO users (username, password, name, flags, children) VALUES (%s, %s, %s, %s::text[], %s::text[])", (username, password, name, flags, children))
 
 def db_create_round(id, name, start, end, matches):
-    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s, %s)", (id, name, start, end, matches))
+    cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s, %s)", (id, name, start, end, matches, False))
     cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
 
-def db_submit_tips(round_id, username, tips):
-    cursor.execute("INSERT INTO %s (username, tips) VALUES (%s, %s)" % (round_id, username, tips))
+def db_set_current_round(id):
+    cursor.execute("UPDATE rounds SET current=%s", (False,))
+    cursor.execute("UPDATE rounds SET current=%s WHERE id=%s", (True, id))
+
 
 def postgres_list(list):
     postgres_list = "{"
@@ -298,6 +300,10 @@ def get_round_info(roundid):
             matches.append(json.loads(match))
         return render_template("round_info.html", round=round, matches=matches, teams=teams["teams"])
 
+@app.route('/admin/set_current_round/<roundid>')
+def set_round(roundid):
+    db_set_current_round(roundid)
+    return redirect("/admin/rounds")
 
 
 if __name__ == '__main__':
