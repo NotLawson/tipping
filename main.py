@@ -158,7 +158,7 @@ def tips(roundid):
                 if match["id"]==match_id:
                     tip=tip
                     break
-            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
+            tips.append({"id":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
         
         cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
         tips_raw = cursor.fetchone()
