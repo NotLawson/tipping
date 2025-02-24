@@ -21,16 +21,20 @@
       <!--Row 2-->
       <p class="one">{{ match["home"][1] }}</p>
       <select name="tip" class="two">
-        <option value="None">-</option>
+        
         {% if match["home"][0] == match["tip"] %}
         <option value="{{ match['home'][0] }}" selected>{{ match["home"][1] }}</option>
-        {% else %}
-        <option value="{{ match['home'][0] }}">{{ match["home"][1] }}</option>
-        {% endif %}
+        <option value="{{ match['away'][0] }}">{{ match["away"][1] }}</option>
+        <option value="None">-</option>
 
-        {% if match["away"][0] == match["tip"] %}
+        {% elif match["away"][0] == match["tip"] %}
         <option value="{{ match['away'][0] }}" selected>{{ match["away"][1] }}</option>
+        <option value="{{ match['home'][0] }}">{{ match["home"][1] }}</option>
+        <option value="None">-</option>
+  
         {% else %}
+        <option value="None">-</option>
+        <option value="{{ match['home'][0] }}">{{ match["home"][1] }}</option>
         <option value="{{ match['away'][0] }}">{{ match["away"][1] }}</option>
         {% endif %}
       </select>
