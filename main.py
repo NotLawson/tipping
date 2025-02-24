@@ -48,7 +48,7 @@ def db_create_user(username, password, name, flags = [], children = []):
 
 def db_create_round(id, name, start, end, matches):
     cursor.execute("INSERT INTO rounds (id, name, start_date, end_date, matches, current) VALUES (%s, %s, %s, %s, %s, %s)", (id, name, start, end, matches, False))
-    cursor.execute("CREATE TABLE %s (username TEXT, tips JSON[])" % id)
+    cursor.execute("CREATE TABLE %s (username TEXT, tips TEXT[])" % id)
 
 def db_set_current_round(id):
     cursor.execute("UPDATE rounds SET current=%s", (False,))
