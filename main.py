@@ -178,7 +178,7 @@ def tips(roundid):
     else:
         for match in round[4]:
             match = json.loads(match)
-            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
+            tips.append({"id":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
     round = {"id":roundid, "tips":tips}
     
     return render_template("tips.html", user=user, round=round)
