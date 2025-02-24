@@ -15,9 +15,9 @@
       {{ match["tip"] }}
       <input type="hidden" name="match_id" value="{{ match['id'] }}">
       <!--Row 1-->
-      <img class="one" src="/static/teams/{{ match['home'] }}.png">
+      <img class="one" src="/static/teams/{{ match['home'][0] }}.png">
       <p class="two">{{ match['date'] }}</p>
-      <img class="three" src="/static/teams/{{ match['away'] }}.png">
+      <img class="three" src="/static/teams/{{ match['away'][0] }}.png">
 
       <!--Row 2-->
       <p class="one">{{ match["home"][1] }}</p>

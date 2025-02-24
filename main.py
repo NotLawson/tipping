@@ -147,8 +147,8 @@ def tips(roundid):
     if request.method == "POST":
         match_ids = request.form.getlist("match_id")
         tip_list = request.form.getlist("tip")
-        app.logger.info("Match IDs: %s" % match_ids)
-        app.logger.info("Tips: %s" % tip_list)
+        print("Match IDs: %s" % match_ids)
+        print("Tips: %s" % tip_list)
         tips=[]
         
         for match in round[4]:
@@ -180,9 +180,8 @@ def tips(roundid):
         for match in round[4]:
             match = json.loads(match)
             tips.append({"id":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
-    round = {"id":roundid, "tips":tips}
     
-    return render_template("tips.html", user=user, round=round)
+    return render_template("tips.html", user=user, round={"id":roundid, "tips":tips})
 
 @app.route("/admin")
 def admin():
