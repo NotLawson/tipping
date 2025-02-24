@@ -147,7 +147,8 @@ def tips(roundid):
     if request.method == "POST":
         match_ids = request.form.getlist("match_id")
         tip_list = request.form.getlist("tip")
-
+        app.logger.info("Match IDs: %s" % match_ids)
+        app.logger.info("Tips: %s" % tip_list)
         tips=[]
         
         for match in round[4]:
