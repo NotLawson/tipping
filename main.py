@@ -159,7 +159,7 @@ def tips(roundid):
                     break
             tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
         
-        cursor.execute("UPDATE %s SET tips=%s WHERE username=%s", (roundid, tips, user[0]))
+        cursor.execute("UPDATE "+roundid+" SET tips=%s WHERE username=%s", ( tips, user[0]))
         return redirect("/tips/"+roundid)
 
     cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
