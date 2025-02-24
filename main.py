@@ -144,20 +144,6 @@ def tips(roundid):
     cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
     round = cursor.fetchone()
 
-    cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
-    tips_raw = cursor.fetchone()
-
-    tips = []
-    if tips_raw != None:
-        for tip in tips_raw[0]:
-            tip = json.loads(tip)
-            tips.append(tip)
-    else:
-        for match in round[4]:
-            match = json.loads(match)
-            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
-    round = {"id":roundid, "tips":tips}
-    
     if request.method == "POST":
         match_ids = request.form.getlist("match_id")
         tip_list = request.form.getlist("tip")
@@ -176,6 +162,20 @@ def tips(roundid):
         cursor.execute("UPDATE %s SET tips=%s WHERE username=%s", (roundid, tips, user[0]))
         return redirect("/tips/"+roundid)
 
+    cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
+    tips_raw = cursor.fetchone()
+
+    tips = []
+    if tips_raw != None:
+        for tip in tips_raw[0]:
+            tip = json.loads(tip)
+            tips.append(tip)
+    else:
+        for match in round[4]:
+            match = json.loads(match)
+            tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
+    round = {"id":roundid, "tips":tips}
+    
     return render_template("tips.html", user=user, round=round)
 
 @app.route("/admin")
