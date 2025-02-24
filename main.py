@@ -134,7 +134,7 @@ def roundselector():
         return "No rounds available"
 
 
-@app.route("/tips/<round>", methods=["GET", "POST"])
+@app.route("/tips/<roundid>", methods=["GET", "POST"])
 def tips(roundid):
     user = auth(request)
     if user==False:
