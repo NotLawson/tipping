@@ -12,6 +12,7 @@
   <form method="post">
     {% for match in round["tips"] %}
     <div class="match">
+      {{ match["tip"] }}
       <input type="hidden" name="match_id" value="{{ match['id'] }}">
       <!--Row 1-->
       <img class="one" src="/static/teams/{{ match['home'] }}.png">
