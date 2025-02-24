@@ -154,6 +154,7 @@ def tips(roundid):
             tips.append(tip)
     else:
         for match in round[4]:
+            match = json.loads(match)
             tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
     round = {"id":roundid, "tips":tips}
     
@@ -164,6 +165,7 @@ def tips(roundid):
         tips=[]
         
         for match in round[4]:
+            match = json.loads(match)
             tip="None"
             for id, tip in zip(match_ids, tip_list):
                 if match["id"]==id:
