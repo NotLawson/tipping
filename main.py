@@ -159,7 +159,12 @@ def tips(roundid):
                     break
             tips.append({"match":match["id"], "home":(match["home"], get_team_friendly(match["home"])), "away":(match["away"], get_team_friendly(match["away"])), "date":match["date"], "tip":"None"})
         
-        cursor.execute("UPDATE "+roundid+" SET tips=%s WHERE username=%s", ( tips, user[0]))
+        cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
+        tips_raw = cursor.fetchone()
+        if tips_raw != None:
+            cursor.execute("UPDATE "+roundid+" SET tips=%s WHERE username=%s", ( tips, user[0]))
+        else:
+            cursor.execute("INSERT INTO "+roundid+" (username, tips) VALUES (%s, %s)", (user[0], tips))
         return redirect("/tips/"+roundid)
 
     cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
