@@ -141,7 +141,7 @@ def tips(roundid):
         return render_template('login.html')
     user = get_user(user)
     
-    cursor.execute("SELECT * FROM rounds WHERE id='%s'", (roundid,))
+    cursor.execute("SELECT * FROM rounds WHERE id=%s", (roundid,))
     round = cursor.fetchone()
 
     cursor.execute("SELECT tips FROM %s WHERE username='%s'" % (roundid, user[0]))
